@@ -28,10 +28,22 @@ class Exercicio_1
     public void PercorrerLista()
     {
         Console.WriteLine("Elementos da lista:");
-        foreach (int numero in ListaNumeros)
-        {
-            Console.WriteLine(numero);
-        }
+
+        //foreach (int numero in ListaNumeros)
+        //{
+        //    Console.WriteLine(numero);
+        //}
+
+        //ListaNumeros.ForEach(numero => Console.WriteLine(numero));
+
+        ListaNumeros.ForEach(numero => {
+            numero += 1;
+            //numero = numero + 1;
+            //numero++;
+        });
+
+        var novaListaNumeros = ListaNumeros.Select(numero => numero.ToString());
+
     }
 
     public void RemoverPrimeiroElemento()
@@ -42,15 +54,32 @@ class Exercicio_1
 
     public void VerificarElemento(int elemento)
     {
-        bool contemElemento = ListaNumeros.Contains(elemento);
-        Console.WriteLine("A lista contém o elemento " + elemento + "? " + contemElemento);
+        var medidores = new List<Medidor>() 
+        { 
+            new Medidor() { Numero = "M001", Setor = 1 }, 
+            new Medidor() { Numero = "M002", Setor = 1 } 
+        };
+
+        var medidorBusca = new Medidor() { Numero = "M001", Setor = 1 };
+
+        var medidorRef = medidores[0];
+        var ehIgual = medidores[0].Equals(medidorBusca);
+
+        bool contemElemento = medidores.Contains(medidorBusca);
+
+        bool contemElementoAny = medidores.Any(p => p.Numero == medidorBusca.Numero);
+
+        Console.WriteLine("A lista contém o elemento " + elemento + "? " + contemElementoAny);
     }
 
     public void OrdenarLista()
     {
         ListaNumeros.Sort();
+        IList<int> lista = ListaNumeros.OrderBy(p => p).ToList();
+        IList<int> lista1 = ListaNumeros.OrderByDescending(p => p).ToList();
+
         Console.WriteLine("Lista ordenada em ordem crescente." );
-        PercorrerLista();   
+        PercorrerLista();
     }
 
     public void InserirElemento(int elemento, int posicao)
@@ -77,4 +106,32 @@ class Exercicio_1
         InserirElemento(15, 1);
         LimparLista();
     }
+
+    static IntPtr GetMemoryAddress(object obj)
+    {
+        // Usa o método GCHandle.Alloc para obter o endereço de memória
+        System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(obj, System.Runtime.InteropServices.GCHandleType.Weak);
+        IntPtr address = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle);
+        handle.Free();
+
+        return address;
+    }
 }
+
+
+class Medidor
+{
+    public string Numero { get; set; }
+    public int Setor { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return Numero == ((Medidor)obj).Numero;
+    }
+
+    public override string ToString()
+    {
+        return Numero.ToString();
+    }
+}
+
