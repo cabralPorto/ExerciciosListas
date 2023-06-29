@@ -49,22 +49,31 @@ public class Exercicio_3
     }
     public List<int> ElementosComOcorrenciaImpar()
     {
-        Dictionary<int, int> ocorrencias = new Dictionary<int, int>();
-        foreach (int num in lista)
+        List<int> ocorrencias = new();
+        foreach (var item in lista)
         {
-            if (ocorrencias.ContainsKey(num))
-            {
-                ocorrencias[num]++;
-            }
-            else
-            {
-                ocorrencias[num] = 1;
-            }
+            if (item % 2 != 0 && !ocorrencias.Contains(item))
+                ocorrencias.Add(item);
         }
 
-        List<int> listaImpares = lista.Where(x => ocorrencias[x] % 2 != 0).Distinct().ToList();
-        Console.WriteLine("Nova lista contendo apenas elementos que aparecem um número ímpar de vezes: " + string.Join(", ", listaImpares));
-        return listaImpares;
+        ocorrencias.ForEach(oc =>  Console.WriteLine(oc));     
+
+        //Dictionary<int, int> ocorrencias = new Dictionary<int, int>();
+        //foreach (int num in lista)
+        //{
+        //    if (ocorrencias.ContainsKey(num))
+        //    {
+        //        ocorrencias[num]++;
+        //    }
+        //    else
+        //    {
+        //        ocorrencias[num] = 1;
+        //    }
+        //}
+
+        //List<int> listaImpares = lista.Where(x => ocorrencias[x] % 2 != 0).Distinct().ToList();
+        //Console.WriteLine("Nova lista contendo apenas elementos que aparecem um número ímpar de vezes: " + string.Join(", ", listaImpares));
+        return ocorrencias;
     }
     public void OrdenarListaDecrescente()
     {
@@ -73,6 +82,13 @@ public class Exercicio_3
     }
     public void InserirElementoComBuscaBinaria(int novoElemento)
     {
+
+        //List<int> list = new();
+        //list.AddRange(new List<int>() { 1, 2, 4, 5 });
+        //int index = lista.BinarySearch(3);
+        //Console.WriteLine(index);
+
+
         int index = lista.BinarySearch(novoElemento);
         if (index < 0)
         {

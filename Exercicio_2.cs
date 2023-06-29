@@ -64,8 +64,10 @@
 
     public void InserirElementoOrdenado(int num)
     {
-        lista.Add(num);
-        lista = lista.OrderBy(x => x).ToList();
+        lista = lista.OrderBy(x => x).ToList();        
+        var index = lista.BinarySearch(num);
+        lista.Insert(index, num);
+
         Console.WriteLine("Elemento " + num + " inserido na posição correta na lista.");
         Console.WriteLine("Lista atualizada: " + string.Join(", ", lista));
     }
